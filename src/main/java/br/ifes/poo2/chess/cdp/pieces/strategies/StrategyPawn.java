@@ -4,16 +4,16 @@
  * and open the template in the editor.
  */
 
-package br.ifes.poo2.chess.cdp.strategies;
+package br.ifes.poo2.chess.cdp.pieces.strategies;
 
-import br.ifes.poo2.chess.cdp.Piece;
+import br.ifes.poo2.chess.cdp.pieces.Piece;
 import br.ifes.poo2.chess.cdp.Position;
 
 /**
  *
  * @author lucas_000
  */
-class StrategyQueen implements Strategy {
+class StrategyPawn implements Strategy {
 
     //TODO: Trazer (e adaptar) o código antigo.
     public boolean canAttack(Piece[][] board, Position original, Position target) {

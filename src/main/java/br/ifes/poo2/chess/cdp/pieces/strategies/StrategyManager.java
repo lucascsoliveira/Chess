@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ifes.poo2.chess.cdp.strategies;
+package br.ifes.poo2.chess.cdp.pieces.strategies;
 
-import br.ifes.poo2.chess.cdp.PieceName;
+import br.ifes.poo2.chess.cdp.pieces.PieceName;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;

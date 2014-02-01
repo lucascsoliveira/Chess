@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ifes.poo2.chess.cdp;
+package br.ifes.poo2.chess.cdp.pieces.factories;
 
-import br.ifes.poo2.chess.cdp.strategies.*;
-import java.util.Observable;
+import br.ifes.poo2.chess.cdp.Position;
+import br.ifes.poo2.chess.cdp.pieces.Color;
+import br.ifes.poo2.chess.cdp.pieces.Piece;
+import br.ifes.poo2.chess.cdp.pieces.PieceName;
+import br.ifes.poo2.chess.cdp.pieces.strategies.Strategy;
+import br.ifes.poo2.chess.cdp.pieces.strategies.StrategyManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,16 +18,22 @@ import java.util.logging.Logger;
  *
  * @author lucas_000
  */
-public class PieceImpl extends Observable implements Piece {
+class PieceImpl implements Piece {
 
-    private Color color;
-    private PieceName pieceName;
-    private int points;
+    private final Color color;
+    private final PieceName pieceName;
+    private final int points;
     private Position position;
-    private Strategy strategy;
+    private Strategy strategy; //TODO: [Dúvida] Como fazer a alteração da strategy in-game?
 
-    //TODO: Criar construtor (quais parâmetros? recebe observadores também?)
-    
+    public PieceImpl(Color color, PieceName pieceName) {
+        this.color = color;
+        this.pieceName = pieceName;
+        this.points = pieceName.getPoints();
+        //A posição ainda não é conhecida
+        this.strategy = StrategyManager.getInstance().getStrategy(pieceName);
+    }
+
     public Color getColor() {
         return color;
     }

@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ifes.poo2.chess.cdp;
+package br.ifes.poo2.chess.cdp.pieces;
+
+import br.ifes.poo2.chess.cdp.Position;
 
 /**
  *
@@ -12,8 +14,6 @@ package br.ifes.poo2.chess.cdp;
 public interface Piece extends Cloneable {
 
     public Color getColor();
-
-//    public void setColor(Color clor);
 
     public PieceName getName();
 
@@ -28,7 +28,11 @@ public interface Piece extends Cloneable {
     public boolean canAttack(Piece[][] board, Position target);
 
     public boolean canMove(Piece[][] board, Position target);
+    
+    //TODO: [Dúvida] Qual método de alterar strategy devo usar? Posso fazer isso em Piece?
+//    public void changeStrategy(Strategy strategy);
+//    public void changeStrategy(PieceName pieceName);
 
-    public Object clone(); //TODO: Tratar ou ignorar a exceção?
+    public Object clone();
 
 }

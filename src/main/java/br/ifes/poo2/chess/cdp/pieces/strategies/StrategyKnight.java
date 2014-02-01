@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ifes.poo2.chess.cdp.strategies;
 
-import br.ifes.poo2.chess.cdp.Piece;
+package br.ifes.poo2.chess.cdp.pieces.strategies;
+
+import br.ifes.poo2.chess.cdp.pieces.Piece;
 import br.ifes.poo2.chess.cdp.Position;
 
 /**
  *
  * @author lucas_000
  */
-class StrategyBishop implements Strategy {
+class StrategyKnight implements Strategy {
 
     //TODO: Trazer (e adaptar) o código antigo.
     public boolean canAttack(Piece[][] board, Position original, Position target) {

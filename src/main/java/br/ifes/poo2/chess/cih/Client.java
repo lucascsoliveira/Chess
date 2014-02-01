@@ -3,13 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package br.ifes.poo2.chess.cdp;
+package br.ifes.poo2.chess.cih;
 
 /**
  *
  * @author lucas_000
  */
-public enum Color {
-    BLACK, WHITE
+public class Client {
+
+    public static void main(String[] args) {
+
+    }
+    
 }
