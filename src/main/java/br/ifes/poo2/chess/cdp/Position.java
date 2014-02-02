@@ -11,20 +11,20 @@ package br.ifes.poo2.chess.cdp;
  */
 public class Position {
 
-    private final int line;
     private final int column;
+    private final int line;
 
-    public Position(int line, int column) {
-        this.line = line;
+    public Position(int column, int line) {
         this.column = column;
-    }
-
-    public int getLine() {
-        return line;
+        this.line = line;
     }
 
     public int getColumn() {
         return column;
+    }
+
+    public int getLine() {
+        return line;
     }
 
     @Override

@@ -16,6 +16,7 @@ import br.ifes.poo2.chess.cdp.Position;
 class StrategyPawn implements Strategy {
 
     //TODO: Trazer (e adaptar) o código antigo.
+    //TODO: Quebrar em duas strategies (movido e não movido)?
     public boolean canAttack(Piece[][] board, Position original, Position target) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
