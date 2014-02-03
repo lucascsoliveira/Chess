@@ -23,7 +23,9 @@ public class Game {
     private Player winner;
 
     private Color turn;
-
+    //TODO: [DICA] Implementar o EnPassant usando uma classe chamada LastMove que armazena o nome da peça a posição atual e a posição anterior; Assim quando uma jogada atender todos os requisitos do movimento temos como saber se o peão moveu ou não 2 casas;
+    //TODO: Implementar construtor;
+    
     public void nextTurn() {
         if (turn.equals(Color.BLACK)) {
             turn = Color.WHITE;

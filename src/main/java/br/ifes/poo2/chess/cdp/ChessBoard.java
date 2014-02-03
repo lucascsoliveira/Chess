@@ -8,6 +8,8 @@ package br.ifes.poo2.chess.cdp;
 import br.ifes.poo2.chess.cdp.pieces.Color;
 import java.util.List;
 import br.ifes.poo2.chess.cdp.pieces.Piece;
+import br.ifes.poo2.chess.cdp.pieces.PieceName;
+import br.ifes.poo2.chess.cdp.pieces.factories.PieceFactory;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -42,6 +44,7 @@ public class ChessBoard {
         clear();
         putBlackPieces();
         putWhitePieces();
+        synchronizePieces();
     }
 
     public void clear() {
@@ -66,11 +69,66 @@ public class ChessBoard {
     }
 
     private void putBlackPieces() {
-        //TODO: Trazer (e adaptar) o código antigo;
+        //Criando torres
+        board[7][0] = PieceFactory.build(PieceName.ROOK, Color.BLACK);
+        board[7][7] = PieceFactory.build(PieceName.ROOK, Color.BLACK);
+
+        //Criando cavalos
+        board[7][1] = PieceFactory.build(PieceName.KNIGHT, Color.BLACK);
+        board[7][6] = PieceFactory.build(PieceName.KNIGHT, Color.BLACK);
+
+        //Criando bispos
+        board[7][2] = PieceFactory.build(PieceName.BISHOP, Color.BLACK);
+        board[7][5] = PieceFactory.build(PieceName.BISHOP, Color.BLACK);
+
+        //Criando rainha
+        board[7][3] = PieceFactory.build(PieceName.QUEEN, Color.BLACK);
+
+        //Criando rei
+        board[7][4] = PieceFactory.build(PieceName.KING, Color.BLACK);
+
+        //Criando peões
+        for (int column = 0; column < SIZE; column++) {
+            board[6][column] = PieceFactory.build(PieceName.PAWN, Color.BLACK);
+        }
     }
 
     private void putWhitePieces() {
-        //TODO: Trazer (e adaptar) o código antigo;
+        //Criando torres
+        board[0][0] = PieceFactory.build(PieceName.ROOK, Color.WHITE);
+        board[0][7] = PieceFactory.build(PieceName.ROOK, Color.WHITE);
+
+        //Criando cavalos
+        board[0][1] = PieceFactory.build(PieceName.KNIGHT, Color.WHITE);
+        board[0][6] = PieceFactory.build(PieceName.KNIGHT, Color.WHITE);
+
+        //Criando bispos
+        board[0][2] = PieceFactory.build(PieceName.BISHOP, Color.WHITE);
+        board[0][5] = PieceFactory.build(PieceName.BISHOP, Color.WHITE);
+
+        //Criando rainha
+        board[0][3] = PieceFactory.build(PieceName.QUEEN, Color.WHITE);
+
+        //Criando rei
+        board[0][4] = PieceFactory.build(PieceName.KING, Color.WHITE);
+
+        //Criando peões
+        for (int column = 0; column < SIZE; column++) {
+            board[1][column] = PieceFactory.build(PieceName.PAWN, Color.WHITE);
+        }
     }
 
+    private void synchronizePieces() {
+        for (int line = 0; line < SIZE; line++) {
+            for (int column = 0; column < SIZE; column++) {
+                Piece piece = board[line][column];
+                if (piece != null) {
+                    inGame.add(piece);
+                    piece.setPosition(new Position(column, line));
+                }
+            }
+        }
+    }
+
+    //TODO: Implements Observer(para manter a posição do rei atualizada);
 }

@@ -75,4 +75,5 @@ class PieceImpl implements Piece {
         return obj;
     }
 
+    //TODO: Extender Observable(para manter a posição do rei atualizada);
 }
