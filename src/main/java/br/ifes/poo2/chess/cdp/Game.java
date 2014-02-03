@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.ifes.poo2.chess.cdp;
 
 import br.ifes.poo2.chess.cdp.pieces.Color;
@@ -16,9 +15,21 @@ import java.util.Map;
  * @author Adelson
  */
 public class Game {
-    ChessBoard chessBoard;
-    Calendar startTime;
-    Calendar endTime;
-    Map<Color, Player> players;
-    Player winner;
+
+    private ChessBoard chessBoard;
+    private Calendar startTime;
+    private Calendar endTime;
+    private Map<Color, Player> players;
+    private Player winner;
+
+    private Color turn;
+
+    public void nextTurn() {
+        if (turn.equals(Color.BLACK)) {
+            turn = Color.WHITE;
+        } else {
+            turn = Color.BLACK;
+        }
+    }
+
 }
