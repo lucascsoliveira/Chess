@@ -10,16 +10,19 @@ import java.util.List;
 import br.ifes.poo2.chess.cdp.pieces.Piece;
 import br.ifes.poo2.chess.cdp.pieces.PieceName;
 import br.ifes.poo2.chess.cdp.pieces.factories.PieceFactory;
+import br.ifes.poo2.chess.util.InvalidMoveException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author Adelson
  */
-public class ChessBoard {
+public class ChessBoard implements Observer {
 
     private static final int SIZE = 8; //ChessBoard é uma matriz SIZExSIZE;
 
@@ -57,14 +60,13 @@ public class ChessBoard {
         inGame.clear();
         captured.clear();
         kingsPosition.clear();
-
     }
 
-    public Iterator<Piece> getInGamePieces() {
+    public Iterator getInGamePieces() {
         return inGame.iterator();
     }
 
-    public Iterator<Piece> getCapturedPieces() {
+    public Iterator getCapturedPieces() {
         return captured.iterator();
     }
 
@@ -86,6 +88,7 @@ public class ChessBoard {
 
         //Criando rei
         board[7][4] = PieceFactory.build(PieceName.KING, Color.BLACK);
+        board[7][4].addObserver(this); //Adicionando ChessBoard como observador do "Black King"
 
         //Criando peões
         for (int column = 0; column < SIZE; column++) {
@@ -111,6 +114,7 @@ public class ChessBoard {
 
         //Criando rei
         board[0][4] = PieceFactory.build(PieceName.KING, Color.WHITE);
+        board[0][4].addObserver(this); //Adicionando ChessBoard como observador do "White King"
 
         //Criando peões
         for (int column = 0; column < SIZE; column++) {
@@ -130,5 +134,35 @@ public class ChessBoard {
         }
     }
 
-    //TODO: Implements Observer(para manter a posição do rei atualizada);
+    public void move() throws InvalidMoveException {
+        //TODO: Implementar método mover
+    }
+
+    public void attack() throws InvalidMoveException {
+        //TODO: Implementar método atacar
+    }
+
+    public void bigCastling() throws InvalidMoveException {
+        //TODO: Implementar método "Roque Maior"
+    }
+
+    public void smallCastling() throws InvalidMoveException {
+        //TODO: Implementar método "Roque Menor"
+    }
+
+    public Piece getPieceAtPosition(Position position) {
+        return board[position.getLine() - 1][position.getColumn() - 1];
+    }
+
+    //TODO: [Dúvida] Posso usar o observador assim?
+    public void update(Observable o, Object arg) {
+        Color color = ((Piece) o).getColor();
+        PieceName pieceName = ((Piece) o).getName();
+        Position position = ((Piece) o).getPosition();
+
+        if (pieceName.equals(PieceName.KING)) {
+            kingsPosition.put(color, position);
+        }
+    }
+
 }

@@ -6,6 +6,7 @@
 package br.ifes.poo2.chess.cdp.pieces;
 
 import br.ifes.poo2.chess.cdp.Position;
+import java.util.Observer;
 
 /**
  *
@@ -20,7 +21,6 @@ public interface Piece extends Cloneable {
     public int getPoints();
 
 //    public Position getLastMove();
-
     public Position getPosition();
 
     public void setPosition(Position position);
@@ -28,11 +28,12 @@ public interface Piece extends Cloneable {
     public boolean canAttack(Piece[][] board, Position target);
 
     public boolean canMove(Piece[][] board, Position target);
-    
+
     //TODO: [Dúvida] Qual método de alterar strategy devo usar? Posso fazer isso em Piece?
 //    public void changeStrategy(Strategy strategy);
 //    public void changeStrategy(PieceName pieceName);
-
     public Object clone();
+
+    public void addObserver(Observer o);
 
 }

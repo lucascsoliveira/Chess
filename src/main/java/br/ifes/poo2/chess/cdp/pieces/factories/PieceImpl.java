@@ -5,12 +5,15 @@
  */
 package br.ifes.poo2.chess.cdp.pieces.factories;
 
+import br.ifes.poo2.chess.cdp.ChessBoard;
 import br.ifes.poo2.chess.cdp.Position;
 import br.ifes.poo2.chess.cdp.pieces.Color;
 import br.ifes.poo2.chess.cdp.pieces.Piece;
 import br.ifes.poo2.chess.cdp.pieces.PieceName;
 import br.ifes.poo2.chess.cdp.pieces.strategies.Strategy;
 import br.ifes.poo2.chess.cdp.pieces.strategies.StrategyManager;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,7 +21,7 @@ import java.util.logging.Logger;
  *
  * @author lucas_000
  */
-class PieceImpl implements Piece {
+class PieceImpl extends Observable implements Piece {
 
     private final Color color;
     private final PieceName pieceName;
@@ -52,6 +55,8 @@ class PieceImpl implements Piece {
 
     public void setPosition(Position position) {
         this.position = position;
+        this.setChanged();
+        this.notifyObservers();
     }
 
     public boolean canAttack(Piece[][] board, Position target) {
@@ -75,5 +80,4 @@ class PieceImpl implements Piece {
         return obj;
     }
 
-    //TODO: Extender Observable(para manter a posição do rei atualizada);
 }
