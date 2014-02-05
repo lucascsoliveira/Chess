@@ -15,7 +15,6 @@ import br.ifes.poo2.chess.cdp.pieces.PieceName;
  */
 public class PieceFactory {
 
-    //TODO: [Dúvida] Posso usar o método fábrica assim?
     public static Piece build(PieceName pieceName, Color color) {
         if (color.equals(Color.BLACK)) {
             return BlackPieceFactory.getInstance().createPiece(pieceName);

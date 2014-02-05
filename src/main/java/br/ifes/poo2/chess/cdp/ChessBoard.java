@@ -22,9 +22,10 @@ import java.util.Observer;
  *
  * @author Adelson
  */
-public class ChessBoard implements Observer {
+public class ChessBoard implements Board, Observer {
 
-    private static final int SIZE = 8; //ChessBoard é uma matriz SIZExSIZE;
+    public static final int MIN_SIZE = 1;
+    public static final int MAX_SIZE = 8; //ChessBoard é uma matriz MAX_SIZExMAX_SIZE;
 
     private final List<Piece> inGame;
     private final List<Piece> captured;
@@ -35,12 +36,8 @@ public class ChessBoard implements Observer {
         inGame = new ArrayList<Piece>();
         captured = new ArrayList<Piece>();
         kingsPosition = new HashMap<Color, Position>();
-        board = new Piece[SIZE][SIZE];
+        board = new Piece[MAX_SIZE][MAX_SIZE];
 
-    }
-
-    public Piece[][] getChessBoard() {
-        return board;
     }
 
     public void setup() {
@@ -51,8 +48,8 @@ public class ChessBoard implements Observer {
     }
 
     public void clear() {
-        for (int line = 0; line < SIZE; line++) {
-            for (int column = 0; column < SIZE; column++) {
+        for (int line = 0; line < MAX_SIZE; line++) {
+            for (int column = 0; column < MAX_SIZE; column++) {
                 board[line][column] = null;
             }
         }
@@ -91,7 +88,7 @@ public class ChessBoard implements Observer {
         board[7][4].addObserver(this); //Adicionando ChessBoard como observador do "Black King"
 
         //Criando peões
-        for (int column = 0; column < SIZE; column++) {
+        for (int column = 0; column < MAX_SIZE; column++) {
             board[6][column] = PieceFactory.build(PieceName.PAWN, Color.BLACK);
         }
     }
@@ -117,14 +114,14 @@ public class ChessBoard implements Observer {
         board[0][4].addObserver(this); //Adicionando ChessBoard como observador do "White King"
 
         //Criando peões
-        for (int column = 0; column < SIZE; column++) {
+        for (int column = 0; column < MAX_SIZE; column++) {
             board[1][column] = PieceFactory.build(PieceName.PAWN, Color.WHITE);
         }
     }
 
     private void synchronizePieces() {
-        for (int line = 0; line < SIZE; line++) {
-            for (int column = 0; column < SIZE; column++) {
+        for (int line = 0; line < MAX_SIZE; line++) {
+            for (int column = 0; column < MAX_SIZE; column++) {
                 Piece piece = board[line][column];
                 if (piece != null) {
                     inGame.add(piece);
@@ -154,7 +151,6 @@ public class ChessBoard implements Observer {
         return board[position.getLine() - 1][position.getColumn() - 1];
     }
 
-    //TODO: [Dúvida] Posso usar o observador assim?
     public void update(Observable o, Object arg) {
         Color color = ((Piece) o).getColor();
         PieceName pieceName = ((Piece) o).getName();

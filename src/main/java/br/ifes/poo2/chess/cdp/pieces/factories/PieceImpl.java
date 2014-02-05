@@ -5,7 +5,7 @@
  */
 package br.ifes.poo2.chess.cdp.pieces.factories;
 
-import br.ifes.poo2.chess.cdp.ChessBoard;
+import br.ifes.poo2.chess.cdp.Board;
 import br.ifes.poo2.chess.cdp.Position;
 import br.ifes.poo2.chess.cdp.pieces.Color;
 import br.ifes.poo2.chess.cdp.pieces.Piece;
@@ -13,7 +13,6 @@ import br.ifes.poo2.chess.cdp.pieces.PieceName;
 import br.ifes.poo2.chess.cdp.pieces.strategies.Strategy;
 import br.ifes.poo2.chess.cdp.pieces.strategies.StrategyManager;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,11 +58,11 @@ class PieceImpl extends Observable implements Piece {
         this.notifyObservers();
     }
 
-    public boolean canAttack(Piece[][] board, Position target) {
+    public boolean canAttack(Board board, Position target) {
         return strategy.canAttack(board, position, target);
     }
 
-    public boolean canMove(Piece[][] board, Position target) {
+    public boolean canMove(Board board, Position target) {
         return strategy.canMove(board, position, target);
     }
 

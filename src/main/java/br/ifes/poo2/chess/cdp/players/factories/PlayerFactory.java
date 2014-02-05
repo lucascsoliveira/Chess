@@ -14,7 +14,6 @@ import br.ifes.poo2.chess.cdp.players.PlayerType;
  */
 public class PlayerFactory {
 
-    //TODO: [Dúvida] Posso usar o método fábrica assim?
     public static Player build(String name, PlayerType type) {
         if (type.equals(PlayerType.COMPUTER)) {
             return PlayerComputerFactory.getInstance().createPlayer(name);

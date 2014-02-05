@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package br.ifes.poo2.chess.cdp.pieces.strategies;
 
-import br.ifes.poo2.chess.cdp.pieces.Piece;
+import br.ifes.poo2.chess.cdp.Board;
 import br.ifes.poo2.chess.cdp.Position;
 
 /**
@@ -16,11 +15,11 @@ import br.ifes.poo2.chess.cdp.Position;
 class StrategyQueen implements Strategy {
 
     //TODO: Trazer (e adaptar) o código antigo.
-    public boolean canAttack(Piece[][] board, Position original, Position target) {
+    public boolean canAttack(Board board, Position original, Position target) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public boolean canMove(Piece[][] board, Position original, Position target) {
+    public boolean canMove(Board board, Position original, Position target) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
