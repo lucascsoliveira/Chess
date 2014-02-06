@@ -17,7 +17,6 @@ import br.ifes.poo2.chess.cdp.pieces.Piece;
 class StrategyPawn implements Strategy {
 
     //TODO: State? (Peão movido, ou ainda não movido)
-    
     public boolean canAttack(Board board, Position original, Position target) {
         if ((board.getPieceAtPosition(target) == null) || (original.equals(target))) {
             return false;

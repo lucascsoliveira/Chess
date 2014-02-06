@@ -25,6 +25,7 @@ import java.util.Observer;
 public class ChessBoard implements Board, Observer {
 
     public static final int FIXPOSITION = 1;
+
     public static final int MIN_SIZE = 1;
     public static final int MAX_SIZE = 8; //ChessBoard é uma matriz MAX_SIZExMAX_SIZE;
 
