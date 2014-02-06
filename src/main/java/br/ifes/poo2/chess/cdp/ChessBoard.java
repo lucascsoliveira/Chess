@@ -133,20 +133,150 @@ public class ChessBoard implements Board, Observer {
         }
     }
 
-    public void attack() throws InvalidMoveException {
-        //TODO: Implementar método atacar
+    public void attack(Color turn, Position original, Position target) throws InvalidMoveException {
+        Piece pieceOriginal, pieceTarget;
+
+        pieceOriginal = getPieceAtPosition(original);
+        pieceTarget = getPieceAtPosition(target);
+
+        //Se não houver peça na posição original
+        if (pieceOriginal == null
+                //Ou não houver peça na posição target
+                || pieceTarget == null
+                //Ou a cor da peça na posição original não pertencer ao jogador da vez
+                || !pieceOriginal.getColor().equals(turn)
+                //Ou ambas as peças possuem a mesma cor (logo, não pode atacar a si mesma,)
+                || pieceOriginal.getColor().equals(pieceTarget.getColor())) {
+            //Dispara exceção
+            throw new InvalidMoveException();
+        } else {
+            //Se a peça puder realizar o ataque
+            if (pieceOriginal.canAttack(this, target)) {
+                changePieces(pieceOriginal, pieceTarget);
+            } else {
+                //Dispara exceção
+                throw new InvalidMoveException();
+            }
+        }
     }
 
-    public void move() throws InvalidMoveException {
-        //TODO: Implementar método mover
+    //FIXME: Corrigir changePieces()
+    private void changePieces(Piece piece, Piece pieceOut) {
+        //Remove a peça capturada da lista de peças in-game
+        inGame.remove(pieceOut);
+        //Adiciona a peça capturada na lista de peças capturadas
+        captured.add(pieceOut);
+
+        //Defini a nova posição da "captora"
+        piece.setPosition(pieceOut.getPosition());
+
+        //Coloca a "captora" no local da capturada
+        pieceOut = piece;
+        //"Limpa" a posição inicial
+        piece = null;
     }
 
-    public void bigCastling() throws InvalidMoveException {
+    public void move(Color turn, Position original, Position target) throws InvalidMoveException {
+        Piece pieceOriginal, pieceTarget;
+
+        pieceOriginal = getPieceAtPosition(original);
+        pieceTarget = getPieceAtPosition(target);
+
+        //Se não houver peça na posição original
+        if (pieceOriginal == null
+                //Ou não houver peça na posição target
+                || pieceTarget != null
+                //Ou a cor da peça na posição original não pertencer ao jogador da vez
+                || !pieceOriginal.getColor().equals(turn)) {
+            //Dispara exceção
+            throw new InvalidMoveException();
+        } else {
+            //Se a peça puder realizar o ataque
+            if (pieceOriginal.canMove(this, target)) {
+                movePiece(pieceOriginal, target);
+            } else {
+                //Dispara exceção
+                throw new InvalidMoveException();
+            }
+        }
+    }
+
+    //FIXME: Corrigir movePieces()
+    private void movePiece(Piece piece, Position target) {
+
+        //Defini a nova posição da peça
+        piece.setPosition(target);
+
+        //Coloca a peça na nova posição
+        Piece auxPiece = getPieceAtPosition(target);
+        auxPiece = piece;
+
+        //"Limpa" a posição inicial
+        piece = null;
+    }
+
+    public void bigCastling(Color turn) throws InvalidMoveException {
         //TODO: Implementar método "Roque Maior"
     }
 
-    public void smallCastling() throws InvalidMoveException {
+    public void smallCastling(Color turn) throws InvalidMoveException {
         //TODO: Implementar método "Roque Menor"
+    }
+
+    public boolean isCheck(Color turn) {
+        Position position = kingsPosition.get(turn);
+
+        for (int line = 0; line < MAX_SIZE; line++) {
+            for (int column = 0; column < MAX_SIZE; column++) {
+                Piece piece = board[line][column];
+                if (piece != null && !piece.getColor().equals(turn)) {
+                    return piece.canAttack(this, position);
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isCheck(Color turn, Position position) {
+        for (int line = 0; line < MAX_SIZE; line++) {
+            for (int column = 0; column < MAX_SIZE; column++) {
+                Piece piece = board[line][column];
+                if (piece != null && !piece.getColor().equals(turn)) {
+                    return piece.canAttack(this, position);
+                }
+            }
+        }
+        return false;
+    }
+
+    private List<Position> getPositionsAround(Position position) {
+        int line = position.getLine();
+        int column = position.getColumn();
+        List<Position> positions = new ArrayList<Position>();
+
+        for (int lineAux = line - 1; lineAux <= line + 1; lineAux++) {
+            for (int columnAux = column - 1; columnAux <= column + 1; columnAux++) {
+                if (lineAux >= MIN_SIZE && columnAux >= MIN_SIZE && lineAux <= MAX_SIZE && columnAux <= MAX_SIZE) {
+                    positions.add(new Position(columnAux, lineAux));
+                }
+            }
+        }
+        return positions;
+    }
+
+    public boolean isCheckmate(Color turn) {
+        //Se o rei está em check
+        if(isCheck(turn)){
+            Iterator iterator = getPositionsAround(kingsPosition.get(turn)).iterator();
+            //Verifica para todas posições válidas em volta, se elas também estão sob ataque
+            while(iterator.hasNext()){
+                //Se alguma posição não estiver em check retorna false
+                if(! isCheck(turn, (Position)iterator.next()))
+                    return false;
+            }
+        }
+        return false;
     }
 
     public Piece getPieceAtPosition(Position position) {

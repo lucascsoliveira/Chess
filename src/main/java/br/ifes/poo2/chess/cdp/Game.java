@@ -10,6 +10,7 @@ import br.ifes.poo2.chess.cdp.pieces.Piece;
 import br.ifes.poo2.chess.cdp.players.Player;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -19,16 +20,23 @@ import java.util.Map;
  */
 public class Game {
 
-    private ChessBoard chessBoard;
+    private final ChessBoard chessBoard;
     private Calendar startTime;
     private Calendar endTime;
-    private Map<Color, Player> players;
+    private final Map<Color, Player> players;
     private Player winner;
 
     private Color turn;
-    //TODO: [DICA] Implementar o EnPassant usando uma classe chamada LastMove que armazena o nome da peça a posição atual e a posição anterior; Assim quando uma jogada atender todos os requisitos do movimento temos como saber se o peão moveu ou não 2 casas;
-    //TODO: Implementar construtor;
 
+    //TODO: [DICA] Implementar o EnPassant usando uma classe chamada LastMove que armazena o nome da peça a posição atual e a posição anterior; Assim quando uma jogada atender todos os requisitos do movimento temos como saber se o peão moveu ou não 2 casas;
+    public Game(Player player1, Player player2) {
+        chessBoard = new ChessBoard();
+        chessBoard.setup();
+        players = new HashMap<Color, Player>();
+        players.put(Color.WHITE, player1);
+        players.put(Color.BLACK, player2);
+    }
+    
     public int getPoints(Color color) {
         int points = 0;
         Iterator iterator = chessBoard.getCapturedPieces();
@@ -72,6 +80,38 @@ public class Game {
         return pieces.iterator();
     }
 
+    public ChessBoard getChessBoard() {
+        return chessBoard;
+    }
+
+    public Calendar getStartTime() {
+        return startTime;
+    }
+
+    public Calendar getEndTime() {
+        return endTime;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setStartTime(Calendar startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(Calendar endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
+    public Player getPlayer(Color color){
+        return players.get(color);
+    }
+    
     public void nextTurn() {
         if (turn.equals(Color.BLACK)) {
             turn = Color.WHITE;
@@ -82,6 +122,10 @@ public class Game {
 
     public Color getTurn() {
         return turn;
+    }
+
+    public void undoMovement() {
+        //TODO: Implementar undoMovement(?)
     }
 
 }
