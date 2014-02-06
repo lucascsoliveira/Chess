@@ -153,6 +153,10 @@ public class ChessBoard implements Board, Observer {
         return board[position.getLine() - FIXPOSITION][position.getColumn() - FIXPOSITION];
     }
 
+    public boolean isPositionEmpty(Position position) {
+        return getPieceAtPosition(position) == null;
+    }
+
     public void update(Observable o, Object arg) {
         Color color = ((Piece) o).getColor();
         PieceName pieceName = ((Piece) o).getName();

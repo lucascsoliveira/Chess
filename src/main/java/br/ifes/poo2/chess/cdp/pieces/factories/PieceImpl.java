@@ -27,6 +27,7 @@ class PieceImpl extends Observable implements Piece {
     private final int points;
     private Position position;
     private Strategy strategy; //TODO: [Dúvida] Como fazer a alteração da strategy in-game?
+    private Position lastPosition;
 
     public PieceImpl(Color color, PieceName pieceName) {
         this.color = color;
@@ -53,6 +54,8 @@ class PieceImpl extends Observable implements Piece {
     }
 
     public void setPosition(Position position) {
+        this.lastPosition = this.position;
+        
         this.position = position;
         this.setChanged();
         this.notifyObservers();
@@ -64,6 +67,10 @@ class PieceImpl extends Observable implements Piece {
 
     public boolean canMove(Board board, Position target) {
         return strategy.canMove(board, position, target);
+    }
+
+    public Position getLastMove() {
+        return getLastMove();
     }
 
     @Override

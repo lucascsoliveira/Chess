@@ -21,7 +21,8 @@ public interface Piece extends Cloneable {
 
     public int getPoints();
 
-//    public Position getLastMove();
+    public Position getLastMove();
+
     public Position getPosition();
 
     public void setPosition(Position position);

@@ -15,4 +15,6 @@ public interface Board {
 
     public Piece getPieceAtPosition(Position position);
 
+    public boolean isPositionEmpty(Position position);
+
 }

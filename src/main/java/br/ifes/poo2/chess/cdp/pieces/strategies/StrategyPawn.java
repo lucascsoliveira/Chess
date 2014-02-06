@@ -96,13 +96,59 @@ class StrategyPawn implements Strategy {
     }
 
     private boolean canBlackPawnMove(Board board, Position original, Position target) {
-        //TODO: Implementar método canBlackPawnMove
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int line = original.getLine();
+        int column = original.getColumn();
+        Piece onOriginal = board.getPieceAtPosition(new Position(original.getColumn(), original.getLine()));
+        Piece onTarget = board.getPieceAtPosition(new Position(target.getColumn(), target.getLine()));
+
+        //Se a posição final estiver vazia
+        if (onTarget == null) {
+            //Se for se mover uma casa
+            if (target.equals(new Position(column, line - 1))) {
+                return true;
+            }
+
+            //Se o peão ainda não se moveu
+            if (onOriginal.getLastMove() == null) {
+                //Se a posição target é duas casas a frente
+                if (target.equals(new Position(column, line - 2))
+                        //E a posição uma casa a frente está vazia
+                        && board.isPositionEmpty(new Position(column, line - 1))) {
+                    return true;
+                }
+            }
+        }
+
+        //Retorna false, se não houver caminho válido para mover;
+        return false;
     }
 
-    private boolean canWhitePawnMove(Board board, Position posIni, Position posFin) {
-        //TODO: Implementar método canWhitePawnMove
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private boolean canWhitePawnMove(Board board, Position original, Position target) {
+        int line = original.getLine();
+        int column = original.getColumn();
+        Piece onOriginal = board.getPieceAtPosition(new Position(original.getColumn(), original.getLine()));
+        Piece onTarget = board.getPieceAtPosition(new Position(target.getColumn(), target.getLine()));
+
+        //Se a posição final estiver vazia
+        if (onTarget == null) {
+            //Se for se mover uma casa
+            if (target.equals(new Position(column, line + 1))) {
+                return true;
+            }
+
+            //Se o peão ainda não se moveu
+            if (onOriginal.getLastMove() == null) {
+                //Se a posição target é duas casas a frente
+                if (target.equals(new Position(column, line + 2))
+                        //E a posição uma casa a frente está vazia
+                        && board.isPositionEmpty(new Position(column, line + 1))) {
+                    return true;
+                }
+            }
+        }
+
+        //Retorna false, se não houver caminho válido para mover;
+        return false;
     }
 
 }
