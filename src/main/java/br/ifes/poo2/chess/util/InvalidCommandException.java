@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ifes.poo2.chess.ciu.cih;
+package br.ifes.poo2.chess.util;
 
 /**
  *
  * @author lucas_000
  */
-public class Client {
-
-    public static void main(String[] args) {
-
-    }
+public class InvalidCommandException extends Exception {
 
 }
