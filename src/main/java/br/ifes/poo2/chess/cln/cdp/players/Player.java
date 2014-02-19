@@ -29,6 +29,4 @@ public interface Player {
 
     public int getVictories();
 
-    public String play(Game game);
-
 }

@@ -26,6 +26,8 @@ public class Game {
     private final Map<Color, Player> players;
     private Player winner;
 
+    private boolean gameOver;
+
     private Color turn;
 
     //TODO: [DICA] Implementar o EnPassant usando uma classe chamada LastMove que armazena o nome da peça a posição atual e a posição anterior; Assim quando uma jogada atender todos os requisitos do movimento temos como saber se o peão moveu ou não 2 casas;
@@ -40,7 +42,7 @@ public class Game {
         //winner
         turn = Color.WHITE;
     }
-    
+
     public int getPoints(Color color) {
         int points = 0;
         Iterator iterator = chessBoard.getCapturedPieces();
@@ -112,10 +114,14 @@ public class Game {
         this.winner = winner;
     }
 
-    public Player getPlayer(Color color){
+    public Player getPlayer(Color color) {
         return players.get(color);
     }
-    
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
     public void nextTurn() {
         if (turn.equals(Color.BLACK)) {
             turn = Color.WHITE;

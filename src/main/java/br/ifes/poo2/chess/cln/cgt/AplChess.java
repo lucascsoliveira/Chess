@@ -21,14 +21,14 @@ import java.util.Map;
  *
  * @author 20101BSI0534
  */
-public abstract class AplChess {
+public class AplChess {
 
     private Game game;
 
     private final String CPU_NAME = "ZEUS";
 
-    private final String ORIGINAL_POSITION = "original";
-    private final String TARGET_POSITION = "target";
+    public static final String ORIGINAL_POSITION = "original";
+    public static final String TARGET_POSITION = "target";
 
     public void newGame(String player_name) {
         Player white_player, black_player;
@@ -37,6 +37,7 @@ public abstract class AplChess {
         black_player = PlayerFactory.build(CPU_NAME, PlayerType.COMPUTER);
 
         game = new Game(white_player, black_player);
+
     }
 
     public void newGame(String whitePlayerName, String blackPlayerName) {
@@ -46,10 +47,11 @@ public abstract class AplChess {
         black_player = PlayerFactory.build(blackPlayerName, PlayerType.HUMAN);
 
         game = new Game(white_player, black_player);
+
     }
 
     public void play(String play) throws InvalidMoveException, InvalidCommandException {
-
+        //TODO: Implementar método play();
         if (play.matches(RegexChess.REGEX_ATTACK)) {
 
         } else if (play.matches(RegexChess.REGEX_MOVE)) {
@@ -79,6 +81,10 @@ public abstract class AplChess {
 
     public ChessBoard getChessBoard() {
         return game.getChessBoard();
+    }
+
+    public boolean isGameOver() {
+        return game.isGameOver();
     }
 
     private Map<String, Position> getPositions(String play) {

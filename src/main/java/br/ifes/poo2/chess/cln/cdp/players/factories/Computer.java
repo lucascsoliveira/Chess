@@ -6,15 +6,14 @@
 package br.ifes.poo2.chess.cln.cdp.players.factories;
 
 import br.ifes.poo2.chess.cln.cdp.Game;
+import br.ifes.poo2.chess.cln.cdp.players.Player;
 
 /**
  *
- * @author Adelson
+ * @author lucas_000
  */
-class PlayerHuman extends PlayerImpl {
+public interface Computer extends Player {
 
-    public PlayerHuman(String name) {
-        super(name);
-    }
+    public String play(Game game);
 
 }
