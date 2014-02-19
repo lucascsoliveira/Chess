@@ -55,7 +55,7 @@ class PieceImpl extends Observable implements Piece {
 
     public void setPosition(Position position) {
         this.lastPosition = this.position;
-        
+
         this.position = position;
         this.setChanged();
         this.notifyObservers();
@@ -86,4 +86,8 @@ class PieceImpl extends Observable implements Piece {
         return obj;
     }
 
+    @Override
+    public String toString() {
+        return pieceName.toString() + color.toString();
+    }
 }

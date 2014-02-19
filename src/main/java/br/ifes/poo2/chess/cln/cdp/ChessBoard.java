@@ -25,10 +25,8 @@ import java.util.Observer;
 public class ChessBoard implements Board, Observer {
 
     public static final int FIXPOSITION = 1;
-
     public static final int MIN_SIZE = 1;
     public static final int MAX_SIZE = 8; //ChessBoard é uma matriz MAX_SIZExMAX_SIZE;
-
     private final List<Piece> inGame;
     private final List<Piece> captured;
     private final Map<Color, Position> kingsPosition;
@@ -267,13 +265,14 @@ public class ChessBoard implements Board, Observer {
 
     public boolean isCheckmate(Color turn) {
         //Se o rei está em check
-        if(isCheck(turn)){
+        if (isCheck(turn)) {
             Iterator iterator = getPositionsAround(kingsPosition.get(turn)).iterator();
             //Verifica para todas posições válidas em volta, se elas também estão sob ataque
-            while(iterator.hasNext()){
+            while (iterator.hasNext()) {
                 //Se alguma posição não estiver em check retorna false
-                if(! isCheck(turn, (Position)iterator.next()))
+                if (!isCheck(turn, (Position) iterator.next())) {
                     return false;
+                }
             }
         }
         return false;
@@ -297,4 +296,18 @@ public class ChessBoard implements Board, Observer {
         }
     }
 
+    @Override
+    public String toString() {
+        String stringBoard = "";
+
+        for (int line = 0; line < MAX_SIZE; line++) {
+            for (int column = 0; column < MAX_SIZE; column++) {
+                stringBoard += board[line][column];
+                stringBoard += "(" + line + "," + column + ")";
+                stringBoard += "\t";
+            }
+            stringBoard += "\n";
+        }
+        return stringBoard;
+    }
 }

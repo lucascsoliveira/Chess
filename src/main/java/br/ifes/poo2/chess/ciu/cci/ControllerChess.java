@@ -5,9 +5,13 @@
  */
 package br.ifes.poo2.chess.ciu.cci;
 
+import br.ifes.poo2.chess.ciu.cih.Screen;
+import br.ifes.poo2.chess.cln.cdp.pieces.Color;
 import br.ifes.poo2.chess.cln.cgt.AplChess;
 import br.ifes.poo2.chess.cln.cgt.AplChessMulti;
 import br.ifes.poo2.chess.cln.cgt.AplChessSingle;
+import br.ifes.poo2.chess.util.InvalidCommandException;
+import br.ifes.poo2.chess.util.InvalidMoveException;
 
 /**
  *
@@ -33,4 +37,22 @@ public class ControllerChess {
         //TODO: Pegar informações do BD e usar o método show() da classe Screen
     }
 
+    public void showBoard() {
+        Screen.show(aplChess.getChessBoard());
+    }
+
+    public void showTurn() {
+        Color color = aplChess.getCurrentTurn();
+        String name = aplChess.getPlayerOfTurn().getName();
+
+        Screen.show("Turno: " + name + " - " + color.toString());
+    }
+
+    public boolean isGameOver() {
+        return aplChess.isGameOver();
+    }
+
+    public void play(String nextLine) throws InvalidMoveException, InvalidCommandException {
+        aplChess.play(nextLine);
+    }
 }

@@ -5,7 +5,7 @@
  */
 package br.ifes.poo2.chess.ciu.cih;
 
-import br.ifes.poo2.chess.cln.cdp.Board;
+import br.ifes.poo2.chess.cln.cdp.ChessBoard;
 
 /**
  *
@@ -13,12 +13,12 @@ import br.ifes.poo2.chess.cln.cdp.Board;
  */
 public class Screen {
 
-    public static void show(Board board) {
-
+    public static void show(ChessBoard chessBoard) {
+        System.out.println(chessBoard);
     }
 
-    public static void show() {
-
+    public static void show(String string) {
+        System.out.println(string);
     }
 
     public static void mainMenu() {
@@ -58,9 +58,15 @@ public class Screen {
         System.out.println("Até logo..!");
     }
 
-//    public static void main(String[] args) {
-//        String name = "a_";
-//        
-//        System.out.println(name.matches(""));
-//    }
+    public static void inputPlay() {
+        System.out.print("Insira sua jogada: ");
+    }
+
+    static void playInvalidMoveErro() {
+        System.out.println("Erro: O movimento não é válido, ou esta peça não é sua.");
+    }
+
+    static void playInvalidCommandErro() {
+        System.out.println("Erro: O comando inserido é inválido!");
+    }
 }

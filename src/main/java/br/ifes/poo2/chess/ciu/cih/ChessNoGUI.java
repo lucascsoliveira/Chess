@@ -6,8 +6,11 @@
 package br.ifes.poo2.chess.ciu.cih;
 
 import br.ifes.poo2.chess.ciu.cci.ControllerChess;
-import java.util.Iterator;
+import br.ifes.poo2.chess.util.InvalidCommandException;
+import br.ifes.poo2.chess.util.InvalidMoveException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,12 +24,12 @@ public class ChessNoGUI {
         controller = new ControllerChess();
     }
 
-    private void singlePlayer() {
+    private String readPlayerName(int player) {
         Scanner input = new Scanner(System.in);
         String name;
 
         do {
-            Screen.inputPlayerName(1);
+            Screen.inputPlayerName(player);
             name = input.nextLine();
 
             if (!name.matches("[a-zA-Z]+\\w*")) {
@@ -34,25 +37,25 @@ public class ChessNoGUI {
             }
         } while (!name.matches("[a-zA-Z]+\\w*"));
 
+        return name;
+    }
+
+    private void singlePlayer() {
+        String name = readPlayerName(1);
+
         controller.newSinglePlayerGame(name);
+        startGame();
     }
 
     private void multiPlayer() {
-        Scanner input = new Scanner(System.in);
         String[] namePlayer = new String[2];
 
         for (int counter = 0; counter < 2; counter++) {
-            do {
-                Screen.inputPlayerName(counter + 1);
-                namePlayer[counter] = input.nextLine();
-
-                if (!namePlayer[counter].matches("[a-zA-Z]+\\w*")) {
-                    Screen.nameError();
-                }
-            } while (!namePlayer[counter].matches("[a-zA-Z]+\\w*"));
+            namePlayer[counter] = readPlayerName(counter + 1);
         }
 
         controller.newMultiPlayerGame(namePlayer[0], namePlayer[1]);
+        startGame();
     }
 
     private void selectPlayers() {
@@ -81,7 +84,28 @@ public class ChessNoGUI {
         controller.dataOfPreviousMatches();
     }
 
-    public void start() {
+    private void startGame() {
+        Scanner input = new Scanner(System.in);
+
+        while (!controller.isGameOver()) {
+            //Exibe o turno (Cor - Player)
+            controller.showTurn();
+            //Exibe o tabuleiro
+            controller.showBoard();
+
+            try {
+                //Lê jogada
+                Screen.inputPlay();
+                controller.play(input.nextLine());
+            } catch (InvalidMoveException ex) {
+                Screen.playInvalidMoveErro();
+            } catch (InvalidCommandException ex) {
+                Screen.playInvalidCommandErro();
+            }
+        }
+    }
+
+    public void run() {
         String option;
         Scanner input = new Scanner(System.in);
 
@@ -102,7 +126,6 @@ public class ChessNoGUI {
     }
 
     public static void main(String[] args) {
-        new ChessNoGUI().start();
+        new ChessNoGUI().run();
     }
-
 }
