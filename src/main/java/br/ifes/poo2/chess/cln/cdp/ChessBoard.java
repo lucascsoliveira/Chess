@@ -11,6 +11,7 @@ import br.ifes.poo2.chess.cln.cdp.pieces.Piece;
 import br.ifes.poo2.chess.cln.cdp.pieces.PieceName;
 import br.ifes.poo2.chess.cln.cdp.pieces.factories.PieceFactory;
 import br.ifes.poo2.chess.util.InvalidMoveException;
+import br.ifes.poo2.chess.util.InvalidPromotionException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -221,6 +222,10 @@ public class ChessBoard implements Board, Observer {
         //TODO: Implementar método "Roque Menor"
     }
 
+    public void promotion(Position position, PieceName pieceName) throws InvalidPromotionException{
+        //TODO: Implementar promotion();
+    }
+    
     public boolean isCheck(Color turn) {
         Position position = kingsPosition.get(turn);
 
@@ -298,16 +303,20 @@ public class ChessBoard implements Board, Observer {
 
     @Override
     public String toString() {
-        String stringBoard = "";
+        String string = "";
 
-        for (int line = 0; line < MAX_SIZE; line++) {
+        for (int line = MAX_SIZE-1; line >= 0; line--) {
             for (int column = 0; column < MAX_SIZE; column++) {
-                stringBoard += board[line][column];
-                stringBoard += "(" + line + "," + column + ")";
-                stringBoard += "\t";
+                if (board[line][column] != null) {
+                    string += board[line][column];
+                } else {
+                    string += "[ ]------";
+                }
+                string += "(" + (column+1) + "," + (line+1) + ")"
+                        + "\t";
             }
-            stringBoard += "\n";
+            string += "\n";
         }
-        return stringBoard;
+        return string;
     }
 }

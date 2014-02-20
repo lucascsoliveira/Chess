@@ -88,6 +88,13 @@ class PieceImpl extends Observable implements Piece {
 
     @Override
     public String toString() {
-        return pieceName.toString() + color.toString();
+        String string;
+
+        string = "["
+                + this.color.toString().charAt(0)
+                + "]"
+                + pieceName.toString();
+
+        return string;
     }
 }

@@ -20,15 +20,16 @@ public class RegexChess {
     private static final String CHECK = "[+]";
     private static final String CHECKMATE = "[#]";
     private static final String PROMOTION = "[=]";
+    private static final String CHECK_OR_CHECKMATE = "[+|#]?";
 
     //REGEX
-    public static final String REGEX_MOVE = POSITION + POSITION;
-    public static final String REGEX_ATTACK = POSITION + ATTACK + POSITION;
+    public static final String REGEX_MOVE = POSITION + POSITION + CHECK_OR_CHECKMATE;
+    public static final String REGEX_ATTACK = POSITION + ATTACK + POSITION + CHECK_OR_CHECKMATE;
     public static final String REGEX_BIG_CASTLING = "[oO]-[oO]-[oO]";
     public static final String REGEX_SMALL_CASTLING = "[oO]-[oO]";
     public static final String REGEX_PROMOTION = POSITION + PROMOTION + PIECES_PROMOTION;
-    public static final String REGEX_CHECK = POSITION + ATTACK + "?" + POSITION + CHECK;
-    public static final String REGEX_CHECKMATE = POSITION + ATTACK + "?" + POSITION + CHECKMATE;
+//    public static final String REGEX_CHECK = POSITION + ATTACK + "?" + POSITION + CHECK;
+//    public static final String REGEX_CHECKMATE = POSITION + ATTACK + "?" + POSITION + CHECKMATE;
 
     private RegexChess() {
     }

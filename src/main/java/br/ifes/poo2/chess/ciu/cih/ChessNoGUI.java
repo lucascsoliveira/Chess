@@ -9,8 +9,6 @@ import br.ifes.poo2.chess.ciu.cci.ControllerChess;
 import br.ifes.poo2.chess.util.InvalidCommandException;
 import br.ifes.poo2.chess.util.InvalidMoveException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *

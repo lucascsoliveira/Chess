@@ -37,7 +37,6 @@ public class AplChess {
         black_player = PlayerFactory.build(CPU_NAME, PlayerType.COMPUTER);
 
         game = new Game(white_player, black_player);
-
     }
 
     public void newGame(String whitePlayerName, String blackPlayerName) {
@@ -47,25 +46,28 @@ public class AplChess {
         black_player = PlayerFactory.build(blackPlayerName, PlayerType.HUMAN);
 
         game = new Game(white_player, black_player);
-
     }
 
     public void play(String play) throws InvalidMoveException, InvalidCommandException {
         //TODO: Implementar método play();
         if (play.matches(RegexChess.REGEX_ATTACK)) {
+            Map map = getPositions(play);
 
+            game.getChessBoard().attack(getCurrentTurn(),
+                    (Position) map.get(ORIGINAL_POSITION),
+                    (Position) map.get(TARGET_POSITION));
         } else if (play.matches(RegexChess.REGEX_MOVE)) {
+            Map map = getPositions(play);
 
-        } else if (play.matches(RegexChess.REGEX_CHECK)) {
-
-        } else if (play.matches(RegexChess.REGEX_CHECKMATE)) {
-
+            game.getChessBoard().move(getCurrentTurn(),
+                    (Position) map.get(ORIGINAL_POSITION),
+                    (Position) map.get(TARGET_POSITION));
         } else if (play.matches(RegexChess.REGEX_PROMOTION)) {
-
+            //Implementar promotion();
         } else if (play.matches(RegexChess.REGEX_BIG_CASTLING)) {
-
+            game.getChessBoard().bigCastling(getCurrentTurn());
         } else if (play.matches(RegexChess.REGEX_SMALL_CASTLING)) {
-
+            game.getChessBoard().smallCastling(getCurrentTurn());
         } else {
             throw new InvalidCommandException();
         }
