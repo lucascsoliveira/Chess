@@ -30,7 +30,8 @@ public class Game {
 
     private Color turn;
 
-    //TODO: [DICA] Implementar o EnPassant usando uma classe chamada LastMove que armazena o nome da peça a posição atual e a posição anterior; Assim quando uma jogada atender todos os requisitos do movimento temos como saber se o peão moveu ou não 2 casas;
+    //TODO: Implementar o EnPassant usando uma classe chamada LastMove que armazena o nome da peça a posição atual e a posição anterior; Assim quando uma jogada atender todos os requisitos do movimento temos como saber se o peão moveu ou não 2 casas;
+    
     public Game(Player player1, Player player2) {
         chessBoard = new ChessBoard();
         chessBoard.setup();
@@ -132,10 +133,6 @@ public class Game {
 
     public Color getTurn() {
         return turn;
-    }
-
-    public void undoMovement() {
-        //TODO: Implementar undoMovement(?)
     }
 
 }

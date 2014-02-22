@@ -205,15 +205,117 @@ public class ChessBoard implements Board, Observer {
     }
 
     public void bigCastling(Color turn) throws InvalidMoveException {
-        //TODO: Implementar método "Roque Maior"
+        Position kingPosition, rookPosition;
+
+        //BLACK BIGCASTLING
+        if (turn.equals(Color.BLACK)) {
+            kingPosition = new Position(5, 8);
+            rookPosition = new Position(1, 8);
+        } //WHITE BIGCASTLING
+        else {
+            kingPosition = new Position(5, 1);
+            rookPosition = new Position(1, 1);
+        }
+
+        bigCastling(turn, kingPosition, rookPosition);
+    }
+
+    private void bigCastling(Color turn, Position kingPosition, Position rookPosition) throws InvalidMoveException {
+        int line = rookPosition.getLine();
+
+        Position[] positions = new Position[3];
+        positions[0] = new Position(2, line);
+        positions[1] = new Position(3, line);
+        positions[2] = new Position(4, line);
+
+        //O rei e a torre devem estar nas posições iniciais
+        if (!isPositionEmpty(rookPosition) && !isPositionEmpty(kingPosition)
+                //Verifica se as peças que estão nas posições iniciais são o rei e a torre
+                && getPieceAtPosition(rookPosition).getName().equals(PieceName.ROOK)
+                && getPieceAtPosition(kingPosition).getName().equals(PieceName.KING)
+                //Nem o rei nem a torre podem ter se movido
+                && getPieceAtPosition(rookPosition).getLastMove() == null
+                && getPieceAtPosition(kingPosition).getLastMove() == null
+                //As posições entre o rei e a torre devem estar vazias
+                && isPositionEmpty(positions[0])
+                && isPositionEmpty(positions[1])
+                && isPositionEmpty(positions[2])
+                //Nenhuma das posições em que o rei passará pode estar em check
+                && !isPositionInCheck(turn, kingPosition)
+                && !isPositionInCheck(turn, positions[0])
+                && !isPositionInCheck(turn, positions[1])
+                && !isPositionInCheck(turn, positions[2])) {
+
+            //Pega o rei e a torre
+            Piece king = getPieceAtPosition(kingPosition);
+            Piece rook = getPieceAtPosition(rookPosition);
+
+            movePiece(king, positions[1]);
+            movePiece(rook, positions[2]);
+
+        } else {
+            throw new InvalidMoveException();
+        }
     }
 
     public void smallCastling(Color turn) throws InvalidMoveException {
-        //TODO: Implementar método "Roque Menor"
+        Position kingPosition, rookPosition;
+
+        //BLACK SMALLCASTLING
+        if (turn.equals(Color.BLACK)) {
+            kingPosition = new Position(5, 8);
+            rookPosition = new Position(8, 8);
+        } //WHITE SMALLCASTLING
+        else {
+            kingPosition = new Position(5, 1);
+            rookPosition = new Position(8, 1);
+        }
+
+        smallCastling(turn, kingPosition, rookPosition);
+    }
+
+    private void smallCastling(Color turn, Position kingPosition, Position rookPosition) throws InvalidMoveException {
+        int line = rookPosition.getLine();
+
+        Position[] positions = new Position[2];
+        positions[0] = new Position(6, line);
+        positions[1] = new Position(7, line);
+        //O rei e a torre devem estar nas posições iniciais
+        if (!isPositionEmpty(rookPosition) && !isPositionEmpty(kingPosition)
+                //Verifica se as peças que estão nas posições iniciais são o rei e a torre
+                && getPieceAtPosition(rookPosition).getName().equals(PieceName.ROOK)
+                && getPieceAtPosition(kingPosition).getName().equals(PieceName.KING)
+                //Nem o rei nem a torre podem ter se movido
+                && getPieceAtPosition(rookPosition).getLastMove() == null
+                && getPieceAtPosition(kingPosition).getLastMove() == null
+                //As posições entre o rei e a torre devem estar vazias
+                && isPositionEmpty(positions[0])
+                && isPositionEmpty(positions[1])
+                //Nenhuma das posições em que o rei passará pode estar em check
+                && !isPositionInCheck(turn, kingPosition)
+                && !isPositionInCheck(turn, positions[0])
+                && !isPositionInCheck(turn, positions[1])) {
+
+            //Pega o rei e a torre
+            Piece king = getPieceAtPosition(kingPosition);
+            Piece rook = getPieceAtPosition(rookPosition);
+
+            movePiece(king, positions[1]);
+            movePiece(rook, positions[0]);
+
+        } else {
+            throw new InvalidMoveException();
+        }
     }
 
     public void promotion(Position position, PieceName pieceName) throws InvalidPromotionException {
-        //TODO: Implementar promotion();
+        Piece piece = getPieceAtPosition(position);
+
+        if (piece.getName().equals(PieceName.PAWN) && (position.getLine() == 1 || position.getLine() == 8)) {
+            getPieceAtPosition(position).setStrategy(pieceName);
+        } else {
+            throw new InvalidPromotionException();
+        }
     }
 
     public boolean isCheck(Color turn) {

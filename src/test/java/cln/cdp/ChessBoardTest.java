@@ -11,6 +11,8 @@ import br.ifes.poo2.chess.cln.cdp.pieces.Color;
 import br.ifes.poo2.chess.cln.cdp.pieces.Piece;
 import br.ifes.poo2.chess.cln.cdp.pieces.PieceName;
 import br.ifes.poo2.chess.cln.cdp.pieces.factories.PieceFactory;
+import br.ifes.poo2.chess.util.InvalidMoveException;
+import br.ifes.poo2.chess.util.InvalidPromotionException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -207,16 +209,6 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void attack() {
-        //TODO: Fazer teste
-    }
-
-    @Test
-    public void move() {
-        //TODO: Fazer teste
-    }
-
-    @Test
     public void isCheck() {
         //TODO: Fazer teste
     }
@@ -227,18 +219,103 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void bigCastling() {
-        //TODO: Fazer teste
+    public void blackSmallCastling() throws InvalidMoveException {
+        Piece king = PieceFactory.build(PieceName.KING, Color.BLACK),
+                rook = PieceFactory.build(PieceName.ROOK, Color.BLACK);
+
+        Position kingPosition = new Position(5, 8),
+                rookPosition = new Position(8, 8);
+        
+        chessBoard.putPieceAtPosition(king, kingPosition);
+        chessBoard.putPieceAtPosition(rook, rookPosition);
+        
+        chessBoard.smallCastling(Color.BLACK);
+        
+        Assert.assertNull(chessBoard.getPieceAtPosition(kingPosition));
+        Assert.assertNull(chessBoard.getPieceAtPosition(rookPosition));
+        Assert.assertEquals(king, chessBoard.getPieceAtPosition(new Position(7, 8)));
+        Assert.assertEquals(rook, chessBoard.getPieceAtPosition(new Position(6, 8)));
+    }
+    
+    @Test
+    public void whiteSmallCastling() throws InvalidMoveException {
+        Piece king = PieceFactory.build(PieceName.KING, Color.WHITE),
+                rook = PieceFactory.build(PieceName.ROOK, Color.WHITE);
+
+        Position kingPosition = new Position(5, 1),
+                rookPosition = new Position(8, 1);
+        
+        chessBoard.putPieceAtPosition(king, kingPosition);
+        chessBoard.putPieceAtPosition(rook, rookPosition);
+        
+        chessBoard.smallCastling(Color.WHITE);
+        
+        Assert.assertNull(chessBoard.getPieceAtPosition(kingPosition));
+        Assert.assertNull(chessBoard.getPieceAtPosition(rookPosition));
+        Assert.assertEquals(king, chessBoard.getPieceAtPosition(new Position(7, 1)));
+        Assert.assertEquals(rook, chessBoard.getPieceAtPosition(new Position(6, 1)));
     }
 
     @Test
-    public void smallCastling() {
-        //TODO: Fazer teste
+    public void blackBigCastling() throws InvalidMoveException {
+        Piece king = PieceFactory.build(PieceName.KING, Color.BLACK),
+                rook = PieceFactory.build(PieceName.ROOK, Color.BLACK);
+
+        Position kingPosition = new Position(5, 8),
+                rookPosition = new Position(1, 8);
+        
+        chessBoard.putPieceAtPosition(king, kingPosition);
+        chessBoard.putPieceAtPosition(rook, rookPosition);
+        
+        chessBoard.bigCastling(Color.BLACK);
+        
+        Assert.assertNull(chessBoard.getPieceAtPosition(kingPosition));
+        Assert.assertNull(chessBoard.getPieceAtPosition(rookPosition));
+        Assert.assertEquals(king, chessBoard.getPieceAtPosition(new Position(3, 8)));
+        Assert.assertEquals(rook, chessBoard.getPieceAtPosition(new Position(4, 8)));
+    }
+    
+    @Test
+    public void whiteBigCastling() throws InvalidMoveException {
+        Piece king = PieceFactory.build(PieceName.KING, Color.WHITE),
+                rook = PieceFactory.build(PieceName.ROOK, Color.WHITE);
+
+        Position kingPosition = new Position(5, 1),
+                rookPosition = new Position(1, 1);
+        
+        chessBoard.putPieceAtPosition(king, kingPosition);
+        chessBoard.putPieceAtPosition(rook, rookPosition);
+        
+        chessBoard.bigCastling(Color.WHITE);
+        
+        Assert.assertNull(chessBoard.getPieceAtPosition(kingPosition));
+        Assert.assertNull(chessBoard.getPieceAtPosition(rookPosition));
+        Assert.assertEquals(king, chessBoard.getPieceAtPosition(new Position(3, 1)));
+        Assert.assertEquals(rook, chessBoard.getPieceAtPosition(new Position(4, 1)));
+    }
+    
+    @Test
+    public void promotion() throws InvalidPromotionException {
+        Piece pawn = PieceFactory.build(PieceName.PAWN, Color.BLACK);
+        Position pawnPosition = new Position(ChessBoard.MIN_SIZE, ChessBoard.MIN_SIZE);
+
+        chessBoard.putPieceAtPosition(pawn, pawnPosition);
+
+        chessBoard.promotion(pawnPosition, PieceName.BISHOP);
+
+        Assert.assertNotSame(PieceName.PAWN, chessBoard.getPieceAtPosition(pawnPosition).getName());
     }
 
-    @Test
-    public void promotion() {
-        //TODO: Fazer teste
+    @Test(expected = InvalidPromotionException.class)
+    public void promotionError() throws InvalidPromotionException {
+        Piece pawn = PieceFactory.build(PieceName.PAWN, Color.BLACK);
+        Position pawnPosition = new Position(ChessBoard.MIN_SIZE, 5);
+
+        chessBoard.putPieceAtPosition(pawn, pawnPosition);
+
+        chessBoard.promotion(pawnPosition, PieceName.BISHOP);
+
+        Assert.assertNotSame(PieceName.PAWN, chessBoard.getPieceAtPosition(pawnPosition).getName());
     }
 
 }

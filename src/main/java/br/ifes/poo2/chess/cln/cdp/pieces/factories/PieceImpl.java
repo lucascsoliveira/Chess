@@ -23,10 +23,10 @@ import java.util.logging.Logger;
 class PieceImpl extends Observable implements Piece {
 
     private final Color color;
-    private final PieceName pieceName;
+    private PieceName pieceName;
     private final int points;
     private Position position;
-    private Strategy strategy; //TODO: [Dúvida] Como fazer a alteração da strategy in-game?
+    private Strategy strategy;
     private Position lastPosition;
 
     public PieceImpl(Color color, PieceName pieceName) {
@@ -70,7 +70,7 @@ class PieceImpl extends Observable implements Piece {
     }
 
     public Position getLastMove() {
-        return getLastMove();
+        return lastPosition;
     }
 
     @Override
@@ -97,4 +97,10 @@ class PieceImpl extends Observable implements Piece {
 
         return string;
     }
+
+    public void setStrategy(PieceName pieceName) {
+        this.pieceName = pieceName;
+        strategy = StrategyManager.getInstance().getStrategy(pieceName);
+    }
+
 }

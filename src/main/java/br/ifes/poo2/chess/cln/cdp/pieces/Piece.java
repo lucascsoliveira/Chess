@@ -31,9 +31,8 @@ public interface Piece extends Cloneable {
 
     public boolean canMove(Board board, Position target);
 
-    //TODO: [Dúvida] Qual método de alterar strategy devo usar? Posso fazer isso em Piece?
-//    public void changeStrategy(Strategy strategy);
-//    public void changeStrategy(PieceName pieceName);
+    public void setStrategy(PieceName pieceName);
+
     public Object clone();
 
     public void addObserver(Observer o);
