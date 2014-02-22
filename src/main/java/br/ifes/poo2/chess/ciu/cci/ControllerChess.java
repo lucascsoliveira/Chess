@@ -12,6 +12,7 @@ import br.ifes.poo2.chess.cln.cgt.AplChessMulti;
 import br.ifes.poo2.chess.cln.cgt.AplChessSingle;
 import br.ifes.poo2.chess.util.InvalidCommandException;
 import br.ifes.poo2.chess.util.InvalidMoveException;
+import br.ifes.poo2.chess.util.InvalidPromotionException;
 
 /**
  *
@@ -52,7 +53,7 @@ public class ControllerChess {
         return aplChess.isGameOver();
     }
 
-    public void play(String nextLine) throws InvalidMoveException, InvalidCommandException {
+    public void play(String nextLine) throws InvalidMoveException, InvalidCommandException, InvalidPromotionException {
         aplChess.play(nextLine);
     }
 }

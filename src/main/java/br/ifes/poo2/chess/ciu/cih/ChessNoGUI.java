@@ -8,6 +8,7 @@ package br.ifes.poo2.chess.ciu.cih;
 import br.ifes.poo2.chess.ciu.cci.ControllerChess;
 import br.ifes.poo2.chess.util.InvalidCommandException;
 import br.ifes.poo2.chess.util.InvalidMoveException;
+import br.ifes.poo2.chess.util.InvalidPromotionException;
 import java.util.Scanner;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Scanner;
  */
 public class ChessNoGUI {
 
-    private ControllerChess controller;
+    private final ControllerChess controller;
 
     public ChessNoGUI() {
         controller = new ControllerChess();
@@ -99,6 +100,8 @@ public class ChessNoGUI {
                 Screen.playInvalidMoveErro();
             } catch (InvalidCommandException ex) {
                 Screen.playInvalidCommandErro();
+            } catch (InvalidPromotionException ex) {
+                Screen.playInvalidMoveErro();
             }
         }
     }
@@ -113,13 +116,15 @@ public class ChessNoGUI {
             if (option.equals("1")) {
                 selectPlayers();
             } else if (option.equals("2")) {
-                listDataOfPreviousMatches();
+                //TODO: Retomar partida
             } else if (option.equals("3")) {
+                listDataOfPreviousMatches();
+            } else if (option.equals("4")) {
                 Screen.goodbye();
             } else {
                 Screen.inputError();
             }
-        } while (!option.equals("3"));
+        } while (!option.equals("4"));
 
     }
 

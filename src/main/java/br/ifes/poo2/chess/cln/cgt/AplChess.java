@@ -9,11 +9,13 @@ import br.ifes.poo2.chess.cln.cdp.ChessBoard;
 import br.ifes.poo2.chess.cln.cdp.Game;
 import br.ifes.poo2.chess.cln.cdp.Position;
 import br.ifes.poo2.chess.cln.cdp.pieces.Color;
+import br.ifes.poo2.chess.cln.cdp.pieces.PieceName;
 import br.ifes.poo2.chess.cln.cdp.players.Player;
 import br.ifes.poo2.chess.cln.cdp.players.PlayerType;
 import br.ifes.poo2.chess.cln.cdp.players.factories.PlayerFactory;
 import br.ifes.poo2.chess.util.InvalidCommandException;
 import br.ifes.poo2.chess.util.InvalidMoveException;
+import br.ifes.poo2.chess.util.InvalidPromotionException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,29 +50,9 @@ public class AplChess {
         game = new Game(white_player, black_player);
     }
 
-    public void play(String play) throws InvalidMoveException, InvalidCommandException {
-        //TODO: Implementar método play();
-        if (play.matches(RegexChess.REGEX_ATTACK)) {
-            Map map = getPositions(play);
+    //TODO: Trocar a implementação para Interprete 
+    public void play(String play) throws InvalidMoveException, InvalidCommandException, InvalidPromotionException {
 
-            game.getChessBoard().attack(getCurrentTurn(),
-                    (Position) map.get(ORIGINAL_POSITION),
-                    (Position) map.get(TARGET_POSITION));
-        } else if (play.matches(RegexChess.REGEX_MOVE)) {
-            Map map = getPositions(play);
-
-            game.getChessBoard().move(getCurrentTurn(),
-                    (Position) map.get(ORIGINAL_POSITION),
-                    (Position) map.get(TARGET_POSITION));
-        } else if (play.matches(RegexChess.REGEX_PROMOTION)) {
-            //Implementar promotion();
-        } else if (play.matches(RegexChess.REGEX_BIG_CASTLING)) {
-            game.getChessBoard().bigCastling(getCurrentTurn());
-        } else if (play.matches(RegexChess.REGEX_SMALL_CASTLING)) {
-            game.getChessBoard().smallCastling(getCurrentTurn());
-        } else {
-            throw new InvalidCommandException();
-        }
     }
 
     public Color getCurrentTurn() {
@@ -89,12 +71,13 @@ public class AplChess {
         return game.isGameOver();
     }
 
+    //FIXME: COrrigir getPositions
     private Map<String, Position> getPositions(String play) {
         HashMap<String, Position> mapPositions = new HashMap<String, Position>();
 
         String[] positions;
 
-        positions = play.replaceAll(RegexChess.REGEX_ATTACK, "$1 $2 $3 $4").split(" ");
+        positions = play.replaceAll(RegexChess.REGEX_MOVE, "$1 $2 $3 $4").split(" ");
         Position original = new Position(Integer.parseInt(positions[0]), Integer.parseInt(positions[1]));
         Position target = new Position(Integer.parseInt(positions[2]), Integer.parseInt(positions[3]));
 

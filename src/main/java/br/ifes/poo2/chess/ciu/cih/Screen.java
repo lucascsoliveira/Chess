@@ -24,16 +24,17 @@ public class Screen {
     public static void mainMenu() {
         System.out.println("--------- Menu ---------");
         System.out.println("1.  Iniciar nova partida;");
-        System.out.println("2.  Dados das partidas;");
-        System.out.println("3.  Sair;");
+        System.out.println("2.  Retomar uma partida;");
+        System.out.println("3.  Dados das partidas;");
+        System.out.println("4.  Sair;");
         System.out.println("");
         System.out.print("Opcao: ");
     }
 
     public static void selectGameMode() {
         System.out.println("---------  ---------");
-        System.out.println("1. Um jogador");
-        System.out.println("2. Dois jogadores");
+        System.out.println("1. Player vs ZEUS (CPU)");
+        System.out.println("2. Player vs Player");
         System.out.println("3. Voltar");
 
         System.out.println("");
@@ -41,12 +42,13 @@ public class Screen {
     }
 
     public static void inputPlayerName(int number) {
-        System.out.println("--------- Jogador " + number + " ---------");
+        System.out.println("--------- Player " + number + " ---------");
         System.out.print("Insira nome: ");
     }
 
     public static void inputError() {
         System.out.println("ERRO: Entrada inválida!");
+        System.out.println("-> Leia atentamente as opções!");
     }
 
     public static void nameError() {

@@ -45,13 +45,12 @@ public class ChessBoard implements Board, Observer {
         clear();
         putBlackPieces();
         putWhitePieces();
-        synchronizePieces();
     }
 
     public void clear() {
-        for (int line = 0; line < MAX_SIZE; line++) {
-            for (int column = 0; column < MAX_SIZE; column++) {
-                board[line][column] = null;
+        for (int line = MIN_SIZE; line <= MAX_SIZE; line++) {
+            for (int column = MIN_SIZE; column <= MAX_SIZE; column++) {
+                clearPosition(new Position(column, line));
             }
         }
 
@@ -70,65 +69,55 @@ public class ChessBoard implements Board, Observer {
 
     private void putBlackPieces() {
         //Criando torres
-        board[7][0] = PieceFactory.build(PieceName.ROOK, Color.BLACK);
-        board[7][7] = PieceFactory.build(PieceName.ROOK, Color.BLACK);
+        putPieceAtPosition(PieceFactory.build(PieceName.ROOK, Color.BLACK), new Position(1, 8));
+        putPieceAtPosition(PieceFactory.build(PieceName.ROOK, Color.BLACK), new Position(8, 8));
 
         //Criando cavalos
-        board[7][1] = PieceFactory.build(PieceName.KNIGHT, Color.BLACK);
-        board[7][6] = PieceFactory.build(PieceName.KNIGHT, Color.BLACK);
+        putPieceAtPosition(PieceFactory.build(PieceName.KNIGHT, Color.BLACK), new Position(2, 8));
+        putPieceAtPosition(PieceFactory.build(PieceName.KNIGHT, Color.BLACK), new Position(7, 8));
 
         //Criando bispos
-        board[7][2] = PieceFactory.build(PieceName.BISHOP, Color.BLACK);
-        board[7][5] = PieceFactory.build(PieceName.BISHOP, Color.BLACK);
+        putPieceAtPosition(PieceFactory.build(PieceName.BISHOP, Color.BLACK), new Position(3, 8));
+        putPieceAtPosition(PieceFactory.build(PieceName.BISHOP, Color.BLACK), new Position(6, 8));
 
         //Criando rainha
-        board[7][3] = PieceFactory.build(PieceName.QUEEN, Color.BLACK);
+        putPieceAtPosition(PieceFactory.build(PieceName.QUEEN, Color.BLACK), new Position(4, 8));
 
         //Criando rei
-        board[7][4] = PieceFactory.build(PieceName.KING, Color.BLACK);
-        board[7][4].addObserver(this); //Adicionando ChessBoard como observador do "Black King"
+        putPieceAtPosition(PieceFactory.build(PieceName.KING, Color.BLACK), new Position(5, 8));
+        kingsPosition.put(Color.BLACK, new Position(5, 8));
+        getPieceAtPosition(new Position(5, 8)).addObserver(this); //Adicionando ChessBoard como observador do "Black King"
 
         //Criando peões
-        for (int column = 0; column < MAX_SIZE; column++) {
-            board[6][column] = PieceFactory.build(PieceName.PAWN, Color.BLACK);
+        for (int column = MIN_SIZE; column <= MAX_SIZE; column++) {
+            putPieceAtPosition(PieceFactory.build(PieceName.PAWN, Color.BLACK), new Position(column, 7));
         }
     }
 
     private void putWhitePieces() {
         //Criando torres
-        board[0][0] = PieceFactory.build(PieceName.ROOK, Color.WHITE);
-        board[0][7] = PieceFactory.build(PieceName.ROOK, Color.WHITE);
+        putPieceAtPosition(PieceFactory.build(PieceName.ROOK, Color.WHITE), new Position(1, 1));
+        putPieceAtPosition(PieceFactory.build(PieceName.ROOK, Color.WHITE), new Position(8, 1));
 
         //Criando cavalos
-        board[0][1] = PieceFactory.build(PieceName.KNIGHT, Color.WHITE);
-        board[0][6] = PieceFactory.build(PieceName.KNIGHT, Color.WHITE);
+        putPieceAtPosition(PieceFactory.build(PieceName.KNIGHT, Color.WHITE), new Position(2, 1));
+        putPieceAtPosition(PieceFactory.build(PieceName.KNIGHT, Color.WHITE), new Position(7, 1));
 
         //Criando bispos
-        board[0][2] = PieceFactory.build(PieceName.BISHOP, Color.WHITE);
-        board[0][5] = PieceFactory.build(PieceName.BISHOP, Color.WHITE);
+        putPieceAtPosition(PieceFactory.build(PieceName.BISHOP, Color.WHITE), new Position(3, 1));
+        putPieceAtPosition(PieceFactory.build(PieceName.BISHOP, Color.WHITE), new Position(6, 1));
 
         //Criando rainha
-        board[0][3] = PieceFactory.build(PieceName.QUEEN, Color.WHITE);
+        putPieceAtPosition(PieceFactory.build(PieceName.QUEEN, Color.WHITE), new Position(4, 1));
 
         //Criando rei
-        board[0][4] = PieceFactory.build(PieceName.KING, Color.WHITE);
-        board[0][4].addObserver(this); //Adicionando ChessBoard como observador do "White King"
+        putPieceAtPosition(PieceFactory.build(PieceName.KING, Color.WHITE), new Position(5, 1));
+        kingsPosition.put(Color.WHITE, new Position(5, 1));
+        getPieceAtPosition(new Position(5, 1)).addObserver(this); //Adicionando ChessBoard como observador do "White King"
 
         //Criando peões
-        for (int column = 0; column < MAX_SIZE; column++) {
-            board[1][column] = PieceFactory.build(PieceName.PAWN, Color.WHITE);
-        }
-    }
-
-    private void synchronizePieces() {
-        for (int line = 0; line < MAX_SIZE; line++) {
-            for (int column = 0; column < MAX_SIZE; column++) {
-                Piece piece = board[line][column];
-                if (piece != null) {
-                    inGame.add(piece);
-                    piece.setPosition(new Position(column + FIXPOSITION, line + FIXPOSITION));
-                }
-            }
+        for (int column = MIN_SIZE; column <= MAX_SIZE; column++) {
+            putPieceAtPosition(PieceFactory.build(PieceName.PAWN, Color.WHITE), new Position(column, 2));
         }
     }
 
@@ -151,7 +140,7 @@ public class ChessBoard implements Board, Observer {
         } else {
             //Se a peça puder realizar o ataque
             if (pieceOriginal.canAttack(this, target)) {
-                changePieces(pieceOriginal, pieceTarget);
+                capturePiece(pieceOriginal, pieceTarget);
             } else {
                 //Dispara exceção
                 throw new InvalidMoveException();
@@ -159,20 +148,22 @@ public class ChessBoard implements Board, Observer {
         }
     }
 
-    //FIXME: Corrigir changePieces()
-    private void changePieces(Piece piece, Piece pieceOut) {
+    public void capturePiece(Piece piece, Piece capturedPiece) {
+        Position originalPosition = piece.getPosition();
+
         //Remove a peça capturada da lista de peças in-game
-        inGame.remove(pieceOut);
+        inGame.remove(capturedPiece);
         //Adiciona a peça capturada na lista de peças capturadas
-        captured.add(pieceOut);
+        captured.add(capturedPiece);
 
         //Defini a nova posição da "captora"
-        piece.setPosition(pieceOut.getPosition());
+        piece.setPosition(capturedPiece.getPosition());
 
         //Coloca a "captora" no local da capturada
-        pieceOut = piece;
+        putPieceAtPosition(piece, piece.getPosition());
+
         //"Limpa" a posição inicial
-        piece = null;
+        clearPosition(originalPosition);
     }
 
     public void move(Color turn, Position original, Position target) throws InvalidMoveException {
@@ -200,18 +191,17 @@ public class ChessBoard implements Board, Observer {
         }
     }
 
-    //FIXME: Corrigir movePieces()
-    private void movePiece(Piece piece, Position target) {
+    public void movePiece(Piece piece, Position target) {
+        Position originalPosition = piece.getPosition();
 
-        //Defini a nova posição da peça
+        //Define a nova posição na peça
         piece.setPosition(target);
 
-        //Coloca a peça na nova posição
-        Piece auxPiece = getPieceAtPosition(target);
-        auxPiece = piece;
+        //Coloca a peça na posição target
+        putPieceAtPosition(piece, target);
 
         //"Limpa" a posição inicial
-        piece = null;
+        clearPosition(originalPosition);
     }
 
     public void bigCastling(Color turn) throws InvalidMoveException {
@@ -222,10 +212,10 @@ public class ChessBoard implements Board, Observer {
         //TODO: Implementar método "Roque Menor"
     }
 
-    public void promotion(Position position, PieceName pieceName) throws InvalidPromotionException{
+    public void promotion(Position position, PieceName pieceName) throws InvalidPromotionException {
         //TODO: Implementar promotion();
     }
-    
+
     public boolean isCheck(Color turn) {
         Position position = kingsPosition.get(turn);
 
@@ -241,7 +231,7 @@ public class ChessBoard implements Board, Observer {
         return false;
     }
 
-    private boolean isCheck(Color turn, Position position) {
+    private boolean isPositionInCheck(Color turn, Position position) {
         for (int line = 0; line < MAX_SIZE; line++) {
             for (int column = 0; column < MAX_SIZE; column++) {
                 Piece piece = board[line][column];
@@ -275,7 +265,7 @@ public class ChessBoard implements Board, Observer {
             //Verifica para todas posições válidas em volta, se elas também estão sob ataque
             while (iterator.hasNext()) {
                 //Se alguma posição não estiver em check retorna false
-                if (!isCheck(turn, (Position) iterator.next())) {
+                if (!isPositionInCheck(turn, (Position) iterator.next())) {
                     return false;
                 }
             }
@@ -285,6 +275,26 @@ public class ChessBoard implements Board, Observer {
 
     public Piece getPieceAtPosition(Position position) {
         return board[position.getLine() - FIXPOSITION][position.getColumn() - FIXPOSITION];
+    }
+
+    public void clearPosition(Position position) {
+        int line = position.getLine() - FIXPOSITION;
+        int column = position.getColumn() - FIXPOSITION;
+
+        board[line][column] = null;
+    }
+
+    public void putPieceAtPosition(Piece piece, Position position) {
+        int line = position.getLine() - FIXPOSITION;
+        int column = position.getColumn() - FIXPOSITION;
+
+        piece.setPosition(position);
+
+        if (!inGame.contains(piece)) {
+            inGame.add(piece);
+        }
+
+        board[line][column] = piece;
     }
 
     public boolean isPositionEmpty(Position position) {
@@ -305,14 +315,14 @@ public class ChessBoard implements Board, Observer {
     public String toString() {
         String string = "";
 
-        for (int line = MAX_SIZE-1; line >= 0; line--) {
+        for (int line = MAX_SIZE - 1; line >= 0; line--) {
             for (int column = 0; column < MAX_SIZE; column++) {
                 if (board[line][column] != null) {
                     string += board[line][column];
                 } else {
                     string += "[ ]------";
                 }
-                string += "(" + (column+1) + "," + (line+1) + ")"
+                string += "(" + (column + 1) + "," + (line + 1) + ")"
                         + "\t";
             }
             string += "\n";
