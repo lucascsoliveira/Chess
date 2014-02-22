@@ -71,4 +71,12 @@ public class Screen {
     static void playInvalidCommandErro() {
         System.out.println("Erro: O comando inserido é inválido!");
     }
+
+    public static void draw() {
+        System.out.println("Houve um empate!");
+    }
+
+    public static void giveUp() {
+        System.out.println("Um dos jogadores desistiu!");
+    }
 }

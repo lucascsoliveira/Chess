@@ -208,6 +208,21 @@ public class ChessBoardTest {
         Assert.assertEquals(target, this.chessBoard.getPieceAtPosition(target).getPosition());
     }
 
+//    @Test
+//    public void move() throws InvalidMoveException{
+//        chessBoard.setup();
+//        
+//        Position origin = new Position(1, 2);
+//        Position target = new Position(1, 3);
+//        
+//        Assert.assertEquals(true, chessBoard.isPositionEmpty(target));
+//        
+//        chessBoard.move(Color.WHITE, origin, target);
+//        
+//        Assert.assertNull(chessBoard.isPositionEmpty(origin));
+//        
+//    }
+    
     @Test
     public void isCheck() {
         //TODO: Fazer teste

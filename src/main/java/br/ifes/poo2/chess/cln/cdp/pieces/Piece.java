@@ -7,6 +7,7 @@ package br.ifes.poo2.chess.cln.cdp.pieces;
 
 import br.ifes.poo2.chess.cln.cdp.Board;
 import br.ifes.poo2.chess.cln.cdp.Position;
+import java.util.List;
 import java.util.Observer;
 
 /**
@@ -36,5 +37,7 @@ public interface Piece extends Cloneable {
     public Object clone();
 
     public void addObserver(Observer o);
+    
+    public List<Position> getPath(Board board, Position original);
 
 }

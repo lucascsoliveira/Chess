@@ -23,19 +23,14 @@ public class RegexChess {
 //    private static final String CHECKMATE = "[#]";
 
     //REGEX
-    public static final String REGEX_MOVE = POSITION + POSITION;
+    public static final String REGEX_MOVEMENT = POSITION + POSITION;
     public static final String REGEX_BIG_CASTLING = "[oO]-[oO]-[oO]";
     public static final String REGEX_SMALL_CASTLING = "[oO]-[oO]";
     public static final String REGEX_PROMOTION = POSITION + PROMOTION + PIECES_PROMOTION;
-    
-    //FIXME: Corrigir estas Regex's antes de rodar o programa
-    public static final String REGEX_SAVE = "save";
-    public static final String REGEX_EXIT = "sair";
-    
+
 //    public static final String REGEX_ATTACK = POSITION + ATTACK + POSITION + CHECK_OR_CHECKMATE;
 //    public static final String REGEX_CHECK = POSITION + ATTACK + "?" + POSITION + CHECK;
 //    public static final String REGEX_CHECKMATE = POSITION + ATTACK + "?" + POSITION + CHECKMATE;
-
     private RegexChess() {
     }
 

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ifes.poo2.chess.cln.cdp.players.factories;
+package br.ifes.poo2.chess.cln.cdp.players;
 
 import br.ifes.poo2.chess.cln.cdp.Game;
+import br.ifes.poo2.chess.cln.cdp.pieces.Color;
 import br.ifes.poo2.chess.cln.cdp.players.Player;
 
 /**
@@ -14,6 +15,6 @@ import br.ifes.poo2.chess.cln.cdp.players.Player;
  */
 public interface Computer extends Player {
 
-    public String play(Game game);
+    public String play(Color color, Game game);
 
 }

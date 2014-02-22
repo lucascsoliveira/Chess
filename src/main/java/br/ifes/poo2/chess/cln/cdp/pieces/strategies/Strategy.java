@@ -7,6 +7,7 @@ package br.ifes.poo2.chess.cln.cdp.pieces.strategies;
 
 import br.ifes.poo2.chess.cln.cdp.Board;
 import br.ifes.poo2.chess.cln.cdp.Position;
+import java.util.List;
 
 /**
  *
@@ -17,5 +18,7 @@ public interface Strategy {
     public boolean canAttack(Board board, Position original, Position target);
 
     public boolean canMove(Board board, Position original, Position target);
+    
+    public List<Position> getPath(Board board, Position original);
 
 }

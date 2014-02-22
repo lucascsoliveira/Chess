@@ -13,7 +13,7 @@ import br.ifes.poo2.chess.cln.cdp.pieces.PieceName;
  *
  * @author lucas_000
  */
-class StrategyQueen implements Strategy {
+class StrategyQueen extends StrategyImpl {
 
     private final Strategy strategyBishop = StrategyManager.getInstance().getStrategy(PieceName.BISHOP);
     private final Strategy strategyRook = StrategyManager.getInstance().getStrategy(PieceName.ROOK);

@@ -14,11 +14,12 @@ import br.ifes.poo2.chess.cln.cdp.pieces.Piece;
  *
  * @author lucas_000
  */
-class StrategyPawn implements Strategy {
+class StrategyPawn extends StrategyImpl {
 
-    //TODO: State? (Peão movido, ou ainda não movido)
     public boolean canAttack(Board board, Position original, Position target) {
-        if ((board.getPieceAtPosition(target) == null) || (original.equals(target))) {
+        if ((board.getPieceAtPosition(target) == null)
+                || board.getPieceAtPosition(original).getColor().equals(board.getPieceAtPosition(target).getColor())
+                || (original.equals(target))) {
             return false;
         } else {
             Piece piece;

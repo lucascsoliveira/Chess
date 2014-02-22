@@ -43,7 +43,7 @@ public class ChessNoGUI {
         String name = readPlayerName(1);
 
         controller.newSinglePlayerGame(name);
-        startGame();
+        startGameSingleplayer();
     }
 
     private void multiPlayer() {
@@ -54,7 +54,7 @@ public class ChessNoGUI {
         }
 
         controller.newMultiPlayerGame(namePlayer[0], namePlayer[1]);
-        startGame();
+        startGameMultiplayer();
     }
 
     private void selectPlayers() {
@@ -83,7 +83,35 @@ public class ChessNoGUI {
         controller.dataOfPreviousMatches();
     }
 
-    private void startGame() {
+    private void startGameSingleplayer() {
+        Scanner input = new Scanner(System.in);
+        boolean CPU_Joga = false;
+
+        while (!controller.isGameOver()) {
+            //Exibe o turno (Cor - Player)
+            controller.showTurn();
+            //Exibe o tabuleiro
+            controller.showBoard();
+
+            try {
+                //Lê jogada
+                Screen.inputPlay();
+                controller.play(input.nextLine());
+                String string = controller.getPlayCPU();
+                Screen.show(string);
+                controller.play(string);
+            } catch (InvalidMoveException ex) {
+                Screen.playInvalidMoveErro();
+            } catch (InvalidCommandException ex) {
+                Screen.playInvalidCommandErro();
+            } catch (InvalidPromotionException ex) {
+                Screen.playInvalidMoveErro();
+            }
+
+        }
+    }
+
+    private void startGameMultiplayer() {
         Scanner input = new Scanner(System.in);
 
         while (!controller.isGameOver()) {

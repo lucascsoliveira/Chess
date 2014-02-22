@@ -12,10 +12,12 @@ import br.ifes.poo2.chess.cln.cdp.Position;
  *
  * @author lucas_000
  */
-class StrategyKnight implements Strategy {
+class StrategyKnight extends StrategyImpl {
 
     public boolean canAttack(Board board, Position original, Position target) {
-        if ((board.getPieceAtPosition(target) == null) || (original.equals(target))) {
+        if ((board.getPieceAtPosition(target) == null)
+                || board.getPieceAtPosition(original).getColor().equals(board.getPieceAtPosition(target).getColor())
+                || (original.equals(target))) {
             return false;
         } else {
             return movement(original, target);

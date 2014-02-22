@@ -8,6 +8,7 @@ package br.ifes.poo2.chess.cln.cdp;
 import br.ifes.poo2.chess.cln.cdp.pieces.Color;
 import br.ifes.poo2.chess.cln.cdp.pieces.Piece;
 import br.ifes.poo2.chess.cln.cdp.players.Player;
+import br.ifes.poo2.chess.util.reuse.Model;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -30,12 +31,10 @@ public class Game {
 
     private Color turn;
 
-    //TODO: Implementar o EnPassant usando uma classe chamada LastMove que armazena o nome da peça a posição atual e a posição anterior; Assim quando uma jogada atender todos os requisitos do movimento temos como saber se o peão moveu ou não 2 casas;
-    
     public Game(Player player1, Player player2) {
         chessBoard = new ChessBoard();
         chessBoard.setup();
-        //startTime
+        startTime = Calendar.getInstance();
         //endTime
         players = new HashMap<Color, Player>();
         players.put(Color.WHITE, player1);
@@ -135,4 +134,35 @@ public class Game {
         return turn;
     }
 
+    public void draw() {
+        endTime = Calendar.getInstance();
+
+        players.get(Color.BLACK).addDraw();
+        players.get(Color.WHITE).addDraw();
+
+        gameOver = true;
+
+    }
+
+    public void giveUp(Color turn) {
+        endTime = Calendar.getInstance();
+
+        if (turn.equals(Color.BLACK)) {
+            players.get(Color.BLACK).addDefeat();
+            players.get(Color.WHITE).addVictory();
+        } else {
+            players.get(Color.BLACK).addVictory();
+            players.get(Color.WHITE).addDefeat();
+        }
+
+        gameOver = true;
+    }
+
+    public void stop() {
+        gameOver = true;
+    }
+
+    public void restart() {
+        gameOver = false;
+    }
 }

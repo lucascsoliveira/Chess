@@ -12,6 +12,7 @@ import br.ifes.poo2.chess.cln.cdp.pieces.Piece;
 import br.ifes.poo2.chess.cln.cdp.pieces.PieceName;
 import br.ifes.poo2.chess.cln.cdp.pieces.strategies.Strategy;
 import br.ifes.poo2.chess.cln.cdp.pieces.strategies.StrategyManager;
+import java.util.List;
 import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -101,6 +102,10 @@ class PieceImpl extends Observable implements Piece {
     public void setStrategy(PieceName pieceName) {
         this.pieceName = pieceName;
         strategy = StrategyManager.getInstance().getStrategy(pieceName);
+    }
+
+    public List<Position> getPath(Board board, Position original) {
+        return this.strategy.getPath(board, original);
     }
 
 }
